@@ -2,41 +2,49 @@
 
 echo "Welcome to Employee Wage Computation Program"
 
-isPartTime=1
-wage=2
-ratePerHour=20
-workingdays=20
-maxhoursinmonth=100
+PER_HOUR=20
+FULL_DAY_HOUR=8
+PART_TIME_HOUR=4
+NUMBER_OF_HOUR=100
+NUMBER_OF_DAYS=20
 
-totalempHr=0
-totaldays=0
+numberOfDays=20
+totalWorkingDays=0
+totalEmpHrs=0
 
-function getempHr(){
-  case $empcheck in
-         $isPartTime)
-                   empHours=4
-                   ;;
-         $wage)
-                   empHours=8
-                   ;;
-               *)
-                  empHours=0
-                  ;;
-esac
+function getWorkingHours()
+{
+	random=$1				
+	case $random in
+		1)
+			empHrs=8										 
+			;;
 
+		2)
+			empHrs=4										 
+			;;
 
+		3)
+			empHrs=0
+			;;
+	esac
+echo "$empHrs"
 }
-while [[ $totalempHr -lt $maxhoursinmonth && $totaldays -lt $workingdays ]]
+
+function calcDailyWage()
+{
+local workingHrs=$1
+wage=$(($workingHrs*$PER_HOUR))
+echo "$wage"
+}
+
+while(( $NUMBER_OF_HOUR > $totalEmpHrs  && $NUMBER_OF_DAYS > $totalWorkingDays ))
 do
-((totaldays++))
-empcheck=$(( RANDOM%3))
-
-empHours=$( getempHr $empcheck )
-totalempHr=$(($totalempHr+$((empHours))))
+   totalWorkingDays=$((totalWorkingDays+1))
+   empHrs="$( getWorkingHours $((RANDOM%3+1)) )"
+	totalEmpHrs=$(($totalEmpHrs+$empHrs))                     			
+	empDailyWage[$totalWorkingDays]="$( calcDailyWage $empHrs )"		
 done
-totalSalary=$(($totalempHr*$workingdays ))
-
-
-
-
+totalSalary=$(($totalEmpHrs*$numberOfDays))
+echo "Total Salary is : ${empDailyWage[@]}"
 
