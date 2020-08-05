@@ -5,12 +5,15 @@ echo "Welcome to Employee Wage Computation Program"
 isPartTime=1
 wage=2
 ratePerHour=20
-randomCheck=$(( RANDOM%3 ))
 
-case $randomCheck in
+totaldays=20
+for (( day=1; day<=$totaldays; day++))
+do
+empcheck=$(( RANDOM%3))
+case $empcheck in
          $isPartTime)
                    empHours=8
-                   echo "isPartTime"
+                    echo "isPartTime"
                    ;;
          $wage)
                    empHours=12
@@ -21,6 +24,9 @@ case $randomCheck in
                   echo "employee is absent"
                    ;;
 esac
-      empWage=$(($ratePerHour*$empHours))
+empWage=$(($ratePerHour*$empHours))
+totalSalary=$(($totalSalary + $empWage ))
+done
+
 
 
