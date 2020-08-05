@@ -11,10 +11,11 @@ NUMBER_OF_DAYS=20
 numberOfDays=20
 totalWorkingDays=0
 totalEmpHrs=0
+day=1
 
 function getWorkingHours()
 {
-	random=$1				
+	random=$1											
 	case $random in
 		1)
 			empHrs=8										 
@@ -38,13 +39,21 @@ wage=$(($workingHrs*$PER_HOUR))
 echo "$wage"
 }
 
+
 while(( $NUMBER_OF_HOUR > $totalEmpHrs  && $NUMBER_OF_DAYS > $totalWorkingDays ))
 do
    totalWorkingDays=$((totalWorkingDays+1))
    empHrs="$( getWorkingHours $((RANDOM%3+1)) )"
 	totalEmpHrs=$(($totalEmpHrs+$empHrs))                     			
 	empDailyWage[$totalWorkingDays]="$( calcDailyWage $empHrs )"		
+	day=$((day+1))
 done
+
 totalSalary=$(($totalEmpHrs*$numberOfDays))
 echo "Total Salary is : ${empDailyWage[@]}"
+for day in  ${!empDailyWage[@]}
+do
+	printf "$day : ${empDailyWage[$day]} \n"
+done
+
 
