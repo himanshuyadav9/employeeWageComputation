@@ -2,18 +2,22 @@
 
 echo "Welcome to Employee Wage Computation Program"
 
-isPresent=1
+isPartTime=1
+wage=2
 ratePerHour=20
-randomCheck=$(( RANDOM%2 ))
-empWage=0
-if (( $isPresent==$randomCheck ))
+randomCheck=$(( RANDOM%3 ))
+if (( $wage==$randomCheck ))
+then
+        empHours=12
+        echo "wage"
+elif  (($isPartTime==$randomCheck ))
 then
         empHours=8
-        empWage=$(($ratePerHour*$empHours))
-        echo "$empWage"
+        echo "partTime"
 else
-      empHours=0
-      empWage=$(($ratePerHour*$empHours))
-      echo "$empWage"
+         empHours=0
+         echo "Employee is Absent"
 fi
+      empWage=$(( $ratePerHour*$empHours ))
+      echo "$empWage"
 
