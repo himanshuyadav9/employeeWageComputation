@@ -6,18 +6,21 @@ isPartTime=1
 wage=2
 ratePerHour=20
 randomCheck=$(( RANDOM%3 ))
-if (( $wage==$randomCheck ))
-then
-        empHours=12
-        echo "wage"
-elif  (($isPartTime==$randomCheck ))
-then
-        empHours=8
-        echo "partTime"
-else
-         empHours=0
-         echo "Employee is Absent"
-fi
-      empWage=$(( $ratePerHour*$empHours ))
-      echo "$empWage"
+
+case $randomCheck in
+         $isPartTime)
+                   empHours=8
+                   echo "isPartTime"
+                   ;;
+         $wage)
+                   empHours=12
+                   echo "wage"
+                   ;;
+               *0)
+                  empHours=0
+                  echo "employee is absent"
+                   ;;
+esac
+      empWage=$(($ratePerHour*$empHours))
+
 
